@@ -1,42 +1,22 @@
 <script setup>
-import axios from 'axios'
+import { onMounted } from 'vue'
+import { useOrdersStore } from '../store/OrderStore'
 import CardList from '@/components/CardList.vue'
 
-import { computed, onMounted, ref } from 'vue'
+const ordersStore = useOrdersStore()
 
-const orders = ref([])
-
-onMounted(async () => {
-  try {
-    const { data } = await axios.get('https://5289814c0afd45de.mokky.dev/orders')
-    orders.value = data
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-const flattenItems = computed(() => {
-  return orders.value.reduce((acc, order) => {
-    return acc.concat(order.items)
-  }, [])
-})
-
-const totalAmount = computed(() => {
-  return flattenItems.value.reduce((total, item) => total + item.price, 0)
-})
-
-const hasOrders = computed(() => {
-  return orders.value.length > 0
+onMounted(() => {
+  ordersStore.fetchOrders()
 })
 </script>
 
 <template>
   <div class="flex items-center justify-between">
     <h2 class="text-3xl font-bold mb-10">Мои заказы</h2>
-    <h3 class="text-1xl mb-10">Сумма покупок: {{ totalAmount }} руб.</h3>
+    <h3 class="text-1xl mb-10">Сумма покупок: {{ ordersStore.totalAmount }} руб.</h3>
   </div>
-  <CardList :items="flattenItems" isFavorites />
-  <div v-if="!hasOrders" class="text-center" auto-animate>
+  <CardList :items="ordersStore.flattenItems" isFavorites />
+  <div v-if="!ordersStore.hasOrders" class="text-center" auto-animate>
     <span class="text-7xl">🥹</span>
     <h2 class="text-3xl font-bold mb-2">У вас нет заказов</h2>
     <p class="text-slate-400">Вы нищеброд? <br />Оформите хотя бы один заказ.</p>

@@ -8,6 +8,7 @@ import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 import Home from './pages/Home.vue'
 import Favorites from './pages/Favorites.vue'
 import Profile from './pages/Profile.vue'
+import { createPinia } from 'pinia'
 
 const app = createApp(App)
 const router = createRouter({
@@ -18,6 +19,8 @@ const router = createRouter({
     { path: '/orders', name: 'Profile', component: Profile }
   ]
 })
+
 app.use(router)
-app.use(autoAnimatePlugin)
 app.mount('#app')
+app.use(createPinia())
+app.use(autoAnimatePlugin)

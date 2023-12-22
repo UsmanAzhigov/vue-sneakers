@@ -1,29 +1,19 @@
 <script setup>
-import axios from 'axios'
 import CardList from '@/components/CardList.vue'
 
-import { computed, onMounted, ref } from 'vue'
+import { useFavoriteStore } from '../store/FavoriteStore'
+import { onMounted } from 'vue'
 
-const favorites = ref([])
-
+const favoritesStore = useFavoriteStore()
 onMounted(async () => {
-  try {
-    const { data } = await axios.get('https://5289814c0afd45de.mokky.dev/favorites')
-    favorites.value = data.map((obj) => obj.item)
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-const hasOrders = computed(() => {
-  return favorites.value.length > 0
+  favoritesStore.fetchFavorite()
 })
 </script>
 
 <template>
   <h2 class="text-3xl font-bold mb-10">Мои заклакди</h2>
-  <CardList :items="favorites" isFavorites />
-  <div v-if="!hasOrders" class="text-center" auto-animate>
+  <CardList :items="favoritesStore.favorites" isFavorites />
+  <div v-if="!favoritesStore.hasFavorite" class="text-center" auto-animate>
     <span class="text-7xl">😔</span>
     <h2 class="text-3xl font-bold mb-2">Закладок нет :(</h2>
     <p class="text-slate-400">Вы ничего не добавляли в закладки</p>
