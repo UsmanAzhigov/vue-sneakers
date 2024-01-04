@@ -112,7 +112,7 @@ watch(filters, fethcItems)
     <div class="flex flex-col md:flex-row gap-4">
       <select
         @change="onChangeSelect"
-        class="transition border border-gray-200 rounded-md py-2 px-3 mb-2 md:mb-0 outline-none focus:border-gray-300"
+        class="w-[220px] transition border border-gray-200 rounded-md py-2 px-3 mb-2 md:mb-0 outline-none focus:border-gray-300"
       >
         <option value="name">По названию</option>
         <option value="-price">Сначала дорогие</option>
@@ -122,7 +122,7 @@ watch(filters, fethcItems)
         <img class="absolute left-4 top-3" src="/search.svg" />
         <input
           @change="onChangeSearchInput"
-          class="transition border border-gray-200 rounded-md p-2 pl-10 outline-none focus:border-gray-300"
+          class="w-[220px] transition border border-gray-200 rounded-md p-2 pl-10 outline-none focus:border-gray-300"
           type="text"
           placeholder="Поиск..."
         />
