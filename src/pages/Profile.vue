@@ -13,7 +13,6 @@ onMounted(() => {
 <template>
   <div class="flex items-center justify-between">
     <h2 class="text-3xl font-bold mb-10">Мои заказы</h2>
-    <h3 class="text-1xl mb-10">Сумма покупок: {{ ordersStore.totalAmount }} руб.</h3>
   </div>
   <CardList :items="ordersStore.flattenItems" isFavorites />
   <div v-if="!ordersStore.hasOrders" class="text-center" auto-animate>
